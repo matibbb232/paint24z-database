@@ -1,209 +1,208 @@
-SET check_function_bodies = false
-;
+SET check_function_bodies = false;
 
-CREATE TYPE "Status_zamowienia" AS ENUM('pending', 'shipped', 'delivered');
+CREATE TYPE "Order_Status" AS ENUM('pending', 'shipped', 'delivered');
 
-CREATE TYPE "Plec" AS ENUM('K','M');
+CREATE TYPE "Gender" AS ENUM('F','M');
 
 CREATE TABLE "Administrator"(
-id integer NOT NULL, "Pracownik_id" integer NOT NULL,
+id integer NOT NULL, "Employee_id" integer NOT NULL,
   CONSTRAINT "Administrator_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Adres"(
+CREATE TABLE "Address"(
   id integer NOT NULL,
-  "Kraj" varchar(30) NOT NULL,
-  "Miasto" varchar(30) NOT NULL,
-  "Ulica" varchar(30) NOT NULL,
-  "Numer_budynku" varchar(5) NOT NULL,
-  "Numer_lokalu" varchar(4),
-  "Kod_pocztowy" varchar(6) NOT NULL,
-  "Sklep_id" integer NOT NULL,
-  "Klient_id" integer NOT NULL,
-  "Pracownik_id" integer NOT NULL,
-  CONSTRAINT "Adres_pkey" PRIMARY KEY(id)
+  "Country" varchar(30) NOT NULL,
+  "City" varchar(30) NOT NULL,
+  "Street" varchar(30) NOT NULL,
+  "Building_Number" varchar(5) NOT NULL,
+  "Apartment_Number" varchar(4),
+  "Postal_Code" varchar(6) NOT NULL,
+  "Store_id" integer NOT NULL,
+  "Customer_id" integer NOT NULL,
+  "Employee_id" integer NOT NULL,
+  CONSTRAINT "Address_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Kategoria"(
+CREATE TABLE "Category"(
   id integer NOT NULL,
-  "Nazwa" varchar(50) NOT NULL,
-  "Opis" text NOT NULL,
-  "Produkt_id" integer NOT NULL,
-  CONSTRAINT "Kategoria_pkey" PRIMARY KEY(id)
+  "Name" varchar(50) NOT NULL,
+  "Description" text NOT NULL,
+  "Product_id" integer NOT NULL,
+  CONSTRAINT "Category_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Klient"(
+CREATE TABLE "Customer"(
   id integer NOT NULL,
-  "Adres_email" varchar(30) NOT NULL,
-  "Numer_telefonu" varchar(15) NOT NULL,
-  "Imie" varchar(30) NOT NULL,
-  "Nazwisko" varchar(50) NOT NULL,
-  "Plec" "Plec" NOT NULL,
-  "Uzytkownik_id" integer NOT NULL,
-  "Sklep_id" integer NOT NULL,
-  CONSTRAINT "Klient_pkey" PRIMARY KEY(id)
+  "Email_Address" varchar(30) NOT NULL,
+  "Phone_Number" varchar(15) NOT NULL,
+  "First_Name" varchar(30) NOT NULL,
+  "Last_Name" varchar(50) NOT NULL,
+  "Gender" "Gender" NOT NULL,
+  "User_id" integer NOT NULL,
+  "Store_id" integer NOT NULL,
+  CONSTRAINT "Customer_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Magazyn"(
+CREATE TABLE "Warehouse"(
   id integer NOT NULL,
-  "Pojemnosc" integer NOT NULL,
-  "Sklep_id" integer NOT NULL,
-  "Adres_id" integer NOT NULL,
-  CONSTRAINT "Magazyn_pkey" PRIMARY KEY(id)
+  "Capacity" integer NOT NULL,
+  "Store_id" integer NOT NULL,
+  "Address_id" integer NOT NULL,
+  CONSTRAINT "Warehouse_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Miejsce_w_magazynie"(
+CREATE TABLE "Storage_Space"(
   id integer NOT NULL,
-  "Produkt_id" integer NOT NULL,
-  "Magazyn_id" integer NOT NULL,
-  CONSTRAINT "Miejsce_w_magazynie_pkey" PRIMARY KEY(id)
+  "Product_id" integer NOT NULL,
+  "Warehouse_id" integer NOT NULL,
+  CONSTRAINT "Storage_Space_pkey" PRIMARY KEY(id)
 );
 
 CREATE TABLE "Operator"(
-id integer NOT NULL, "Pracownik_id" integer NOT NULL,
+id integer NOT NULL, "Employee_id" integer NOT NULL,
   CONSTRAINT "Operator_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Pracownik"(
+CREATE TABLE "Employee"(
   id integer NOT NULL,
-  "Imie" varchar(30) NOT NULL,
-  "Nazwisko" varchar(50) NOT NULL,
-  "Data_urodzenia" date NOT NULL,
+  "First_Name" varchar(30) NOT NULL,
+  "Last_Name" varchar(50) NOT NULL,
+  "Birth_Date" date NOT NULL,
   "Pesel" char(11) NOT NULL,
-  "Data_zatrudnienia" date NOT NULL,
-  "Adres_email" varchar(30) NOT NULL,
-  "Numer_telefonu" varchar(15) NOT NULL,
-  "Numer_konta" char(26),
-  "Uzytkownik_id" integer NOT NULL,
-  "Sklep_id" integer NOT NULL,
-  CONSTRAINT "Pracownik_pkey" PRIMARY KEY(id)
+  "Hire_Date" date NOT NULL,
+  "Email_Address" varchar(30) NOT NULL,
+  "Phone_Number" varchar(15) NOT NULL,
+  "Bank_Account_Number" char(26),
+  "User_id" integer NOT NULL,
+  "Store_id" integer NOT NULL,
+  CONSTRAINT "Employee_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Producent"(
+CREATE TABLE "Manufacturer"(
   id integer NOT NULL,
-  "Nazwa" varchar(30) NOT NULL,
-  "Produkt_id" integer NOT NULL,
-  CONSTRAINT "Producent_pkey" PRIMARY KEY(id)
+  "Name" varchar(30) NOT NULL,
+  "Product_id" integer NOT NULL,
+  CONSTRAINT "Manufacturer_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Produkt"(
+CREATE TABLE "Product"(
   id integer NOT NULL,
-  "Nazwa" varchar(100) NOT NULL,
-  "Opis" text NOT NULL,
-  "Cena" money NOT NULL,
-  "Sklad" integer NOT NULL,
-  "Sklep_id" integer NOT NULL,
-  "Waga" internal NOT NULL,
-  CONSTRAINT "Produkt_pkey" PRIMARY KEY(id)
+  "Name" varchar(100) NOT NULL,
+  "Description" text NOT NULL,
+  "Price" money NOT NULL,
+  "Composition" integer NOT NULL,
+  "Store_id" integer NOT NULL,
+  "Weight" internal NOT NULL,
+  CONSTRAINT "Product_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Sklep"(
+CREATE TABLE "Store"(
   id integer NOT NULL,
-  "Nazwa" varchar(30) NOT NULL,
-  "Adres_email" varchar(30) NOT NULL,
-  "Numer_telefonu" varchar(15) NOT NULL,
-  "NIP" integer(10) NOT NULL,
-  CONSTRAINT "Sklep_pkey" PRIMARY KEY(id)
+  "Name" varchar(30) NOT NULL,
+  "Email_Address" varchar(30) NOT NULL,
+  "Phone_Number" varchar(15) NOT NULL,
+  "Tax_ID" integer(10) NOT NULL,
+  CONSTRAINT "Store_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Szczegoly_zamowienia"(
+CREATE TABLE "Order_Details"(
   id integer NOT NULL,
-  "Zamowienie_id" integer NOT NULL,
-  "Produkt_id" integer NOT NULL,
-  CONSTRAINT "Szczegoly_zamowienia_pkey" PRIMARY KEY(id)
+  "Order_id" integer NOT NULL,
+  "Product_id" integer NOT NULL,
+  CONSTRAINT "Order_Details_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Uzytkownik"(
+CREATE TABLE "User"(
   id integer NOT NULL,
-  "Login" varchar(30) NOT NULL,
-  "Haslo" varchar(50) NOT NULL,
-  "Data_zalozenia" date NOT NULL,
-  CONSTRAINT "Uzytkownik_pkey" PRIMARY KEY(id)
+  "Username" varchar(30) NOT NULL,
+  "Password" varchar(50) NOT NULL,
+  "Creation_Date" date NOT NULL,
+  CONSTRAINT "User_pkey" PRIMARY KEY(id)
 );
 
-CREATE TABLE "Zamowienie"(
+CREATE TABLE "Order"(
   id integer NOT NULL,
-  "Kwota" money NOT NULL,
-  "Status" "Status_zamowienia" NOT NULL,
-  "Data_zamowienia" date NOT NULL,
-  "Data_wysylki" date NOT NULL,
-  "Klient_id" integer NOT NULL,
-  "Historia" varchar,
-  CONSTRAINT "Zamowienie_pkey" PRIMARY KEY(id)
+  "Amount" money NOT NULL,
+  "Status" "Order_Status" NOT NULL,
+  "Order_Date" date NOT NULL,
+  "Shipping_Date" date NOT NULL,
+  "Customer_id" integer NOT NULL,
+  "History" varchar,
+  CONSTRAINT "Order_pkey" PRIMARY KEY(id)
 );
 
-ALTER TABLE "Pracownik"
-  ADD CONSTRAINT "Pracownik_Uzytkownik_id_fkey"
-    FOREIGN KEY ("Uzytkownik_id") REFERENCES "Uzytkownik" (id);
+ALTER TABLE "Employee"
+  ADD CONSTRAINT "Employee_User_id_fkey"
+    FOREIGN KEY ("User_id") REFERENCES "User" (id);
 
-ALTER TABLE "Klient"
-  ADD CONSTRAINT "Klient_Uzytkownik_id_fkey"
-    FOREIGN KEY ("Uzytkownik_id") REFERENCES "Uzytkownik" (id);
+ALTER TABLE "Customer"
+  ADD CONSTRAINT "Customer_User_id_fkey"
+    FOREIGN KEY ("User_id") REFERENCES "User" (id);
 
 ALTER TABLE "Administrator"
-  ADD CONSTRAINT "Administrator_Pracownik_id_fkey"
-    FOREIGN KEY ("Pracownik_id") REFERENCES "Pracownik" (id);
+  ADD CONSTRAINT "Administrator_Employee_id_fkey"
+    FOREIGN KEY ("Employee_id") REFERENCES "Employee" (id);
 
 ALTER TABLE "Operator"
-  ADD CONSTRAINT "Operator_Pracownik_id_fkey"
-    FOREIGN KEY ("Pracownik_id") REFERENCES "Pracownik" (id);
+  ADD CONSTRAINT "Operator_Employee_id_fkey"
+    FOREIGN KEY ("Employee_id") REFERENCES "Employee" (id);
 
-ALTER TABLE "Klient"
-  ADD CONSTRAINT "Klient_Sklep_id_fkey"
-    FOREIGN KEY ("Sklep_id") REFERENCES "Sklep" (id);
+ALTER TABLE "Customer"
+  ADD CONSTRAINT "Customer_Store_id_fkey"
+    FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
 
-ALTER TABLE "Pracownik"
-  ADD CONSTRAINT "Pracownik_Sklep_id_fkey"
-    FOREIGN KEY ("Sklep_id") REFERENCES "Sklep" (id);
+ALTER TABLE "Employee"
+  ADD CONSTRAINT "Employee_Store_id_fkey"
+    FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
 
-ALTER TABLE "Produkt"
-  ADD CONSTRAINT "Produkt_Sklep_id_fkey"
-    FOREIGN KEY ("Sklep_id") REFERENCES "Sklep" (id);
+ALTER TABLE "Product"
+  ADD CONSTRAINT "Product_Store_id_fkey"
+    FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
 
-ALTER TABLE "Magazyn"
-  ADD CONSTRAINT "Magazyn_Sklep_id_fkey"
-    FOREIGN KEY ("Sklep_id") REFERENCES "Sklep" (id);
+ALTER TABLE "Warehouse"
+  ADD CONSTRAINT "Warehouse_Store_id_fkey"
+    FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
 
-ALTER TABLE "Producent"
-  ADD CONSTRAINT "Producent_Produkt_id_fkey"
-    FOREIGN KEY ("Produkt_id") REFERENCES "Produkt" (id);
+ALTER TABLE "Manufacturer"
+  ADD CONSTRAINT "Manufacturer_Product_id_fkey"
+    FOREIGN KEY ("Product_id") REFERENCES "Product" (id);
 
-ALTER TABLE "Adres"
-  ADD CONSTRAINT "Adres_Sklep_id_fkey"
-    FOREIGN KEY ("Sklep_id") REFERENCES "Sklep" (id);
+ALTER TABLE "Address"
+  ADD CONSTRAINT "Address_Store_id_fkey"
+    FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
 
-ALTER TABLE "Adres"
-  ADD CONSTRAINT "Adres_Klient_id_fkey"
-    FOREIGN KEY ("Klient_id") REFERENCES "Klient" (id);
+ALTER TABLE "Address"
+  ADD CONSTRAINT "Address_Customer_id_fkey"
+    FOREIGN KEY ("Customer_id") REFERENCES "Customer" (id);
 
-ALTER TABLE "Kategoria"
-  ADD CONSTRAINT "Kategoria_Produkt_id_fkey"
-    FOREIGN KEY ("Produkt_id") REFERENCES "Produkt" (id);
+ALTER TABLE "Category"
+  ADD CONSTRAINT "Category_Product_id_fkey"
+    FOREIGN KEY ("Product_id") REFERENCES "Product" (id);
 
-ALTER TABLE "Zamowienie"
-  ADD CONSTRAINT "Zamowienie_Klient_id_fkey"
-    FOREIGN KEY ("Klient_id") REFERENCES "Klient" (id);
+ALTER TABLE "Order"
+  ADD CONSTRAINT "Order_Customer_id_fkey"
+    FOREIGN KEY ("Customer_id") REFERENCES "Customer" (id);
 
-ALTER TABLE "Adres"
-  ADD CONSTRAINT "Adres_Pracownik_id_fkey"
-    FOREIGN KEY ("Pracownik_id") REFERENCES "Pracownik" (id);
+ALTER TABLE "Address"
+  ADD CONSTRAINT "Address_Employee_id_fkey"
+    FOREIGN KEY ("Employee_id") REFERENCES "Employee" (id);
 
-ALTER TABLE "Magazyn"
-  ADD CONSTRAINT "Magazyn_Adres_id_fkey"
-    FOREIGN KEY ("Adres_id") REFERENCES "Adres" (id);
+ALTER TABLE "Warehouse"
+  ADD CONSTRAINT "Warehouse_Address_id_fkey"
+    FOREIGN KEY ("Address_id") REFERENCES "Address" (id);
 
-ALTER TABLE "Miejsce_w_magazynie"
-  ADD CONSTRAINT "Miejsce_w_magazynie_Produkt_id_fkey"
-    FOREIGN KEY ("Produkt_id") REFERENCES "Produkt" (id);
+ALTER TABLE "Storage_Space"
+  ADD CONSTRAINT "Storage_Space_Product_id_fkey"
+    FOREIGN KEY ("Product_id") REFERENCES "Product" (id);
 
-ALTER TABLE "Miejsce_w_magazynie"
-  ADD CONSTRAINT "Miejsce_w_magazynie_Magazyn_id_fkey"
-    FOREIGN KEY ("Magazyn_id") REFERENCES "Magazyn" (id);
+ALTER TABLE "Storage_Space"
+  ADD CONSTRAINT "Storage_Space_Warehouse_id_fkey"
+    FOREIGN KEY ("Warehouse_id") REFERENCES "Warehouse" (id);
 
-ALTER TABLE "Szczegoly_zamowienia"
-  ADD CONSTRAINT "Szczegoly_zamowienia_Zamowienie_id_fkey"
-    FOREIGN KEY ("Zamowienie_id") REFERENCES "Zamowienie" (id);
+ALTER TABLE "Order_Details"
+  ADD CONSTRAINT "Order_Details_Order_id_fkey"
+    FOREIGN KEY ("Order_id") REFERENCES "Order" (id);
 
-ALTER TABLE "Szczegoly_zamowienia"
-  ADD CONSTRAINT "Szczegoly_zamowienia_Produkt_id_fkey"
-    FOREIGN KEY ("Produkt_id") REFERENCES "Produkt" (id);
+ALTER TABLE "Order_Details"
+  ADD CONSTRAINT "Order_Details_Product_id_fkey"
+    FOREIGN KEY ("Product_id") REFERENCES "Product" (id);
