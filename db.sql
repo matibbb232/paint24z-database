@@ -51,7 +51,7 @@ CREATE TABLE "Employees"(
   "Birth_Date" date NOT NULL,
   "Pesel" char(11),
   "Hire_Date" date NOT NULL,
-  "Emial_Address" varchar(30) NOT NULL,
+  "Email_Address" varchar(30) NOT NULL,
   "Phone_Number" varchar(15) NOT NULL,
   "Bank_Account_Number" char(26),
   "Store_id" integer NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE "Products"(
   "Description" text NOT NULL,
   "Price" money NOT NULL,
   "Composition" integer NOT NULL,
-  "Weight" internal NOT NULL,
+  "Weight" NUMERIC(10, 2) NOT NULL,
   "Store_id" integer NOT NULL,
   CONSTRAINT "Products_pkey" PRIMARY KEY(id)
 );
@@ -111,7 +111,7 @@ CREATE TABLE "Store"(
   "Name" varchar(30) NOT NULL,
   "Email_Address" varchar(30) NOT NULL,
   "Phone_Number" varchar(15) NOT NULL,
-  "Tax_ID" integer(10) NOT NULL,
+  "Tax_ID" CHAR(10) NOT NULL,
   CONSTRAINT "Store_pkey" PRIMARY KEY(id)
 );
 
