@@ -61,7 +61,6 @@ CREATE TABLE "Employees"(
 CREATE TABLE "Manufacturers"(
   id integer NOT NULL,
   "Name" varchar(30) NOT NULL,
-  "Products_id" integer NOT NULL,
   CONSTRAINT "Manufacturers_pkey" PRIMARY KEY(id)
 );
 
@@ -96,6 +95,7 @@ CREATE TABLE "Products"(
   "Composition" varchar(100) NOT NULL,
   "Weight" NUMERIC(10, 2) NOT NULL,
   "Store_id" integer NOT NULL,
+  "Manufacturers_id" integer NOT NULL,
   CONSTRAINT "Products_pkey" PRIMARY KEY(id)
 );
 
@@ -176,10 +176,6 @@ ALTER TABLE "Storage_Spaces"
   ADD CONSTRAINT "Storage_Spaces_Warehouses_id_fkey"
     FOREIGN KEY ("Warehouses_id") REFERENCES "Warehouses" (id);
 
-ALTER TABLE "Manufacturers"
-  ADD CONSTRAINT "Manufacturers_Products_id_fkey"
-    FOREIGN KEY ("Products_id") REFERENCES "Products" (id);
-
 ALTER TABLE "Categories"
   ADD CONSTRAINT "Categories_Products_id_fkey"
     FOREIGN KEY ("Products_id") REFERENCES "Products" (id);
@@ -207,3 +203,8 @@ ALTER TABLE "Warehouses"
 ALTER TABLE "Products"
   ADD CONSTRAINT "Products_Store_id_fkey"
     FOREIGN KEY ("Store_id") REFERENCES "Store" (id);
+
+ALTER TABLE "Products"
+  ADD CONSTRAINT "Products_Manufacturers_id_fkey"
+    FOREIGN KEY ("Manufacturers_id") REFERENCES "Manufacturers" (id);
+
