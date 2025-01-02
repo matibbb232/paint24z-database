@@ -93,7 +93,7 @@ CREATE TABLE "Products"(
   "Name" varchar(100) NOT NULL,
   "Description" text NOT NULL,
   "Price" money NOT NULL,
-  "Composition" integer NOT NULL,
+  "Composition" varchar(100) NOT NULL,
   "Weight" NUMERIC(10, 2) NOT NULL,
   "Store_id" integer NOT NULL,
   CONSTRAINT "Products_pkey" PRIMARY KEY(id)
