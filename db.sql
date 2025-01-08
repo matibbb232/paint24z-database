@@ -208,10 +208,15 @@ ALTER TABLE "Products"
   ADD CONSTRAINT "Products_Manufacturers_id_fkey"
     FOREIGN KEY ("Manufacturers_id") REFERENCES "Manufacturers" (id);
 
+
 INSERT INTO "Store" (id, "Name", "Email_Address", "Phone_Number", "Tax_ID")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
 
+INSERT INTO "Manufacturers" (id, "Name")
+VALUES
+(1, 'Analog Devices Inc.'),
+(2, 'Trinamic');
 
 INSERT INTO "Products" (id, "Name", "Description", "Price", "Composition", "Weight", "Store_id", "Manufacturers_id")
 VALUES
@@ -225,12 +230,6 @@ VALUES
 (8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 1, 2),
 (9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 1, 2),
 (10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 1, 2);
-
-
-INSERT INTO "Manufacturers" (id, "Name")
-VALUES
-(1, 'Analog Devices Inc.'),
-(2, 'Trinamic');
 
 
 INSERT INTO "Categories" (id, "Name", "Description", "Products_id")
