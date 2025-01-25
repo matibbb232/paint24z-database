@@ -37,7 +37,7 @@ CREATE TABLE "clients"(
   "phone_number" varchar(15) NOT NULL,
   "name" varchar(30) NOT NULL,
   "last_name" varchar(50) NOT NULL,
-  "gender" "gender" NOT NULL,
+  "gender" NOT NULL,
   "store_id" integer NOT NULL,
   CONSTRAINT "clients_pkey" PRIMARY KEY(id)
 );
@@ -92,6 +92,7 @@ CREATE TABLE "products"(
   "price" NUMERIC(10, 2) NOT NULL,
   "composition" varchar(100) NOT NULL,
   "weight" NUMERIC(10, 5) NOT NULL,
+  "instock" integer NOT NULL,
   "store_id" integer NOT NULL,
   "manufacturers_id" integer NOT NULL,
   "categories_id" integer NOT NULL,
@@ -237,15 +238,31 @@ INSERT INTO "storage_spaces" (id, "warehouses_id")
 VALUES
 (1, 1);
 
-INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id")
+INSERT INTO "clients" (id, "email_address", "phone_number", "name", "last_name", "gender", "store_id")
 VALUES
-(1, 'ADA4099-1HUJZ-RL7', 'Operational Amplifiers - Op Amps Precision, 10MHz, 7V/us OTT RRIO Amp', 27.99, 'Standard electronic components', 0.01, 1, 1, 1, 1),
-(2, 'AD4080BBCZ', 'Analog to Digital Converters - ADC 20-Bit, 40 MSPS SAR ADC', 321.38, 'Advanced analog components', 0.02, 1, 1, 2, 1),
-(3, 'ADXL382-1BCCZ-RL7', 'Accelerometers ADXL382 SPI', 110.51, 'Semiconductor components', 0.015, 1, 1, 3, 1),
-(4, 'STM32F407VG Microcontroller', 'ARM Cortex-M4 32-bit Microcontroller with FPU, 1 MB Flash, 168 MHz', 60.50, 'Standard electronic components', 0.02, 1, 1, 4, 1),
-(5, 'BC547 NPN Transistor', 'General-purpose NPN transistor for low-power amplification and switching', 1.20, 'Standard electronic components', 0.001, 1, 1, 5, 1),
-(6, 'ESP32-WROOM-32 Wi-Fi Module', 'Low-power dual-core Wi-Fi and Bluetooth module with integrated antenna', 25.00, 'Standard electronic components', 0.005, 1, 2, 6, 1),
-(7, 'LTC3643 Backup Power Controller', 'High-efficiency step-up DC/DC converter with integrated switches', 85.00, 'Standard electronic components', 0.01, 1, 2, 7, 1),
-(8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 1, 2, 8, 1),
-(9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 1, 2, 9, 1),
-(10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 1, 2, 10, 1);
+(1, 'elektronicznypan@gmail.com', '123456789', 'Paweł', 'Pawłowski', 'M', 1);
+
+INSERT INTO "employees" (id, "name", "last_name", "birth_date", "pesel", "hire_date", "email_address", "phone_number", "bank_account_number", "store_id")
+VALUES
+(1, 'Anna', 'Kowalska', '1979-06-06', '79839125736', '1999-06-06', 'anialol@gmail.com', '776541099', '102028922276300500000000', 1),
+(2, 'Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1);
+
+
+INSERT INTO "users" (id, "username", "password", "creation_date", "employees_id", "clients_id")
+VALUES
+(1, 'elektronicznypan', 'kochamkable123', '2025-01-01', NULL, 1),
+(2, 'Aniapracownik', 'securePass456', '2025-01-15', 1, NULL),
+(3, 'Szymonszef', 'admin789', '2025-01-20', 2, NULL);
+
+INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id")
+VALUES
+(1, 'ADA4099-1HUJZ-RL7', 'Operational Amplifiers - Op Amps Precision, 10MHz, 7V/us OTT RRIO Amp', 27.99, 'Standard electronic components', 0.01, 12, 1, 1, 1, 1),
+(2, 'AD4080BBCZ', 'Analog to Digital Converters - ADC 20-Bit, 40 MSPS SAR ADC', 321.38, 'Advanced analog components', 0.02, 70, 1, 1, 2, 1),
+(3, 'ADXL382-1BCCZ-RL7', 'Accelerometers ADXL382 SPI', 110.51, 'Semiconductor components', 0.015, 23, 1, 1, 3, 1),
+(4, 'STM32F407VG Microcontroller', 'ARM Cortex-M4 32-bit Microcontroller with FPU, 1 MB Flash, 168 MHz', 60.50, 'Standard electronic components', 0.02, 99, 1, 1, 4, 1),
+(5, 'BC547 NPN Transistor', 'General-purpose NPN transistor for low-power amplification and switching', 1.20, 'Standard electronic components', 0.001, 200, 1, 1, 5, 1),
+(6, 'ESP32-WROOM-32 Wi-Fi Module', 'Low-power dual-core Wi-Fi and Bluetooth module with integrated antenna', 25.00, 'Standard electronic components', 0.005, 85, 1, 2, 6, 1),
+(7, 'LTC3643 Backup Power Controller', 'High-efficiency step-up DC/DC converter with integrated switches', 85.00, 'Standard electronic components', 0.01, 33, 1, 2, 7, 1),
+(8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 87, 1, 2, 8, 1),
+(9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 44, 1, 2, 9, 1),
+(10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 123, 1, 2, 10, 1);
