@@ -12,10 +12,10 @@ CREATE TABLE "addresses"(
   "building_number" varchar(5) NOT NULL,
   "apartment_number" varchar(4),
   "postal_code" varchar(6) NOT NULL,
-  "warehouses_id" integer NOT NULL,
-  "clients_id" integer NOT NULL,
-  "store_id" integer NOT NULL,
-  "employees_id" integer NOT NULL,
+  "warehouses_id" integer,
+  "clients_id" integer,
+  "store_id" integer,
+  "employees_id" integer,
   CONSTRAINT "addresses_pkey" PRIMARY KEY(id)
 );
 
@@ -118,10 +118,14 @@ CREATE TABLE "store"(
 CREATE TABLE "users"(
   id integer NOT NULL,
   "username" varchar(30) NOT NULL,
-  "password" varchar(50) NOT NULL,
+  "password" varchar(500) NOT NULL,
   "creation_date" date NOT NULL,
   "employees_id" integer,
   "clients_id" integer,
+  "last_login" TIMESTAMP NULL,
+  "is_active" BOOLEAN NOT NULL DEFAULT TRUE,
+  "is_superuser" BOOLEAN NOT NULL DEFAULT FALSE,
+  "is_staff" BOOLEAN NOT NULL DEFAULT FALSE,
   CONSTRAINT "users_pkey" PRIMARY KEY(id)
 );
 
@@ -248,11 +252,11 @@ VALUES
 (2, 'Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1);
 
 
-INSERT INTO "users" (id, "username", "password", "creation_date", "employees_id", "clients_id")
+INSERT INTO "users" (id, "username", "password", "creation_date", "employees_id", "clients_id", "last_login", "is_active", "is_superuser", "is_staff")
 VALUES
-(1, 'elektronicznypan', 'kochamkable123', '2025-01-01', NULL, 1),
-(2, 'Aniapracownik', 'securePass456', '2025-01-15', 1, NULL),
-(3, 'Szymonszef', 'admin789', '2025-01-20', 2, NULL);
+(1, 'elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, 1, NULL, TRUE, TRUE, TRUE),
+(2, 'Aniapracownik', 'securePass456', '2025-01-15', 1, NULL, '2022-01-01 08:30:00', TRUE, FALSE, TRUE),
+(3, 'Szymonszef', 'admin789', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, TRUE);
 
 INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id")
 VALUES
