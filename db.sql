@@ -37,7 +37,7 @@ CREATE TABLE "clients"(
   "phone_number" varchar(15) NOT NULL,
   "name" varchar(30) NOT NULL,
   "last_name" varchar(50) NOT NULL,
-  "gender" NOT NULL,
+  "gender" "gender" NOT NULL,
   "store_id" integer NOT NULL,
   CONSTRAINT "clients_pkey" PRIMARY KEY(id)
 );
