@@ -69,6 +69,13 @@ CREATE TABLE "operators"(
   CONSTRAINT "operators_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE orders_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "order_details"(
   id integer NOT NULL DEFAULT nextval('orders_details_id_seq'),
   "orders_id" integer NOT NULL,
@@ -77,10 +84,10 @@ CREATE TABLE "order_details"(
   CONSTRAINT "order_details_pkey" PRIMARY KEY(id)
 );
 
-CREATE SEQUENCE orders_details_id_seq
+CREATE SEQUENCE orders_id_seq
     START WITH 1
     INCREMENT BY 1
-    MINVALUE 0
+    MINVALUE 1
     NO MAXVALUE
     CACHE 1;
 
@@ -95,12 +102,7 @@ CREATE TABLE "orders"(
   CONSTRAINT "orders_pkey" PRIMARY KEY(id)
 );
 
-CREATE SEQUENCE orders_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    MINVALUE 0
-    NO MAXVALUE
-    CACHE 1;
+
 
 CREATE TABLE "products"(
   id integer NOT NULL,
