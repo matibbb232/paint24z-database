@@ -228,6 +228,12 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
+ALTER TABLE "orders"
+    ALTER COLUMN id SET DEFAULT nextval('orders_id_seq');
+  
+ALTER TABLE "order_details"
+    ALTER COLUMN id SET DEFAULT nextval('order_details_id_seq');
+
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
