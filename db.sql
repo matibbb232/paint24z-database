@@ -116,8 +116,6 @@ CREATE TABLE "orders"(
   CONSTRAINT "orders_pkey" PRIMARY KEY(id)
 );
 
-
-
 CREATE TABLE "products"(
   id integer NOT NULL,
   "name" varchar(100) NOT NULL,
