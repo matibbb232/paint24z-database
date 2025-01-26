@@ -76,7 +76,7 @@ CREATE TABLE "order_details"(
 
 CREATE TABLE "orders"(
   id integer NOT NULL,
-  "amount" money NOT NULL,
+  "amount" NUMERIC(10, 2) NOT NULL,
   "status" "order_status" NOT NULL,
   "order_date" date NOT NULL,
   "shipping_date" date NOT NULL,
@@ -212,6 +212,8 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
+# Adding data:
+
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
@@ -271,3 +273,24 @@ VALUES
 (8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 87, 1, 2, 8, 1),
 (9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 44, 1, 2, 9, 1),
 (10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 123, 1, 2, 10, 1);
+
+
+INSERT INTO
+    "orders" (
+        id,
+        "amount",
+        "status",
+        "order_date",
+        "shipping_date",
+        "history",
+        "clients_id"
+    )
+VALUES (
+        1,
+        2,
+        'pending',
+        '2025-01-01',
+        '2025-02-03',
+        'historia zamowienia',
+        1
+    );
