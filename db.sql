@@ -39,6 +39,7 @@ CREATE TABLE "clients"(
   "last_name" varchar(50) NOT NULL,
   "gender" "gender" NOT NULL,
   "store_id" integer NOT NULL,
+  "users_id" integer NOT NULL,
   CONSTRAINT "clients_pkey" PRIMARY KEY(id)
 );
 
@@ -53,6 +54,7 @@ CREATE TABLE "employees"(
   "phone_number" varchar(15) NOT NULL,
   "bank_account_number" char(26),
   "store_id" integer NOT NULL,
+  "users_id" integer NOT NULL,
   CONSTRAINT "employees_pkey" PRIMARY KEY(id)
 );
 
@@ -82,7 +84,7 @@ CREATE TABLE "orders"(
   "order_date" date NOT NULL,
   "shipping_date" date NOT NULL,
   "history" varchar,
-  "clients_id" integer NOT NULL,
+  "users_id" integer NOT NULL,
   CONSTRAINT "orders_pkey" PRIMARY KEY(id)
 );
 
@@ -122,8 +124,6 @@ CREATE TABLE "users"(
   "username" varchar(30) NOT NULL,
   "password" varchar(500) NOT NULL,
   "creation_date" date NOT NULL,
-  "employees_id" integer,
-  "clients_id" integer,
   "last_login" TIMESTAMP NULL,
   "is_active" BOOLEAN NOT NULL DEFAULT TRUE,
   "is_superuser" BOOLEAN NOT NULL DEFAULT FALSE,
@@ -138,9 +138,9 @@ CREATE TABLE "warehouses"(
   CONSTRAINT "warehouses_pkey" PRIMARY KEY(id)
 );
 
-ALTER TABLE "users"
-  ADD CONSTRAINT "users_employees_id_fkey"
-    FOREIGN KEY ("employees_id") REFERENCES "employees" (id);
+ALTER TABLE "employees"
+  ADD CONSTRAINT "employees_users_id_fkey"
+    FOREIGN KEY ("users_id") REFERENCES "users" (id);
 
 ALTER TABLE "administrators"
   ADD CONSTRAINT "administrators_employees_id_fkey"
@@ -150,9 +150,9 @@ ALTER TABLE "operators"
   ADD CONSTRAINT "operators_employees_id_fkey"
     FOREIGN KEY ("employees_id") REFERENCES "employees" (id);
 
-ALTER TABLE "users"
-  ADD CONSTRAINT "users_clients_id_fkey"
-    FOREIGN KEY ("clients_id") REFERENCES "clients" (id);
+ALTER TABLE "clients"
+  ADD CONSTRAINT "clients_users_id_fkey"
+    FOREIGN KEY ("users_id") REFERENCES "users" (id);
 
 ALTER TABLE "employees"
   ADD CONSTRAINT "employees_store_id_fkey"
@@ -163,8 +163,8 @@ ALTER TABLE "clients"
     FOREIGN KEY ("store_id") REFERENCES "store" (id);
 
 ALTER TABLE "orders"
-  ADD CONSTRAINT "orders_clients_id_fkey"
-    FOREIGN KEY ("clients_id") REFERENCES "clients" (id);
+  ADD CONSTRAINT "orders_users_id_fkey"
+    FOREIGN KEY ("users_id") REFERENCES "users" (id);
 
 ALTER TABLE "order_details"
   ADD CONSTRAINT "order_details_orders_id_fkey"
@@ -244,22 +244,22 @@ INSERT INTO "storage_spaces" (id, "warehouses_id")
 VALUES
 (1, 1);
 
-INSERT INTO "clients" (id, "email_address", "phone_number", "name", "last_name", "gender", "store_id")
+INSERT INTO "users" (id, "username", "password", "creation_date", "last_login", "is_active", "is_superuser", "is_staff")
 VALUES
-(1, 'elektronicznypan@gmail.com', '123456789', 'Paweł', 'Pawłowski', 'M', 1);
+(1, 'elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, TRUE, TRUE, TRUE),
+(2, 'Aniapracownik', 'pbkdf2_sha256$600000$octxI5J5hzQZt2qCu2W166$9fFfSA/c9LcvqXvE5q0ApKFOTyhyiYYxRhWZ925RbP8=', '2025-01-15', '2022-01-01 08:30:00', TRUE, TRUE, FALSE),
+(3, 'Szymonszef', 'pbkdf2_sha256$600000$H0XvYr47jbf1Yos4eKw3cD$JS9Xb8Lz4C6kt3UXXhhUZwmADTL1bGiFLkjMb9cqUFE=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, TRUE),
+(4, 'SzymonNIEszef', 'pbkdf2_sha256$600000$hkfuwSHz7HRK88mZCyrh2y$SLkA/5WOD55kpgNoltJb6N1aNOpe1nzZHbpDwwqciDg=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, FALSE);
 
-INSERT INTO "employees" (id, "name", "last_name", "birth_date", "pesel", "hire_date", "email_address", "phone_number", "bank_account_number", "store_id")
+INSERT INTO "clients" (id, "email_address", "phone_number", "name", "last_name", "gender", "store_id", "users_id")
 VALUES
-(1, 'Anna', 'Kowalska', '1979-06-06', '79839125736', '1999-06-06', 'anialol@gmail.com', '776541099', '102028922276300500000000', 1),
-(2, 'Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1);
+(1, 'elektronicznypan@gmail.com', '123456789', 'Paweł', 'Pawłowski', 'M', 1, 1);
 
-
-INSERT INTO "users" (id, "username", "password", "creation_date", "employees_id", "clients_id", "last_login", "is_active", "is_superuser", "is_staff")
+INSERT INTO "employees" (id, "name", "last_name", "birth_date", "pesel", "hire_date", "email_address", "phone_number", "bank_account_number", "store_id", "users_id")
 VALUES
-(1, 'elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, 1, NULL, TRUE, TRUE, TRUE),
-(2, 'Aniapracownik', 'pbkdf2_sha256$600000$octxI5J5hzQZt2qCu2W166$9fFfSA/c9LcvqXvE5q0ApKFOTyhyiYYxRhWZ925RbP8=', '2025-01-15', 1, NULL, '2022-01-01 08:30:00', TRUE, TRUE, FALSE),
-(3, 'Szymonszef', 'pbkdf2_sha256$600000$H0XvYr47jbf1Yos4eKw3cD$JS9Xb8Lz4C6kt3UXXhhUZwmADTL1bGiFLkjMb9cqUFE=', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, TRUE),
-(4, 'SzymonNIEszef', 'pbkdf2_sha256$600000$hkfuwSHz7HRK88mZCyrh2y$SLkA/5WOD55kpgNoltJb6N1aNOpe1nzZHbpDwwqciDg=', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, FALSE);
+(1, 'Anna', 'Kowalska', '1979-06-06', '79839125736', '1999-06-06', 'anialol@gmail.com', '776541099', '102028922276300500000000', 1, 2),
+(2, 'Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1, 3);
+
 
 INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id", "photo_id")
 VALUES
@@ -283,7 +283,7 @@ INSERT INTO
         "order_date",
         "shipping_date",
         "history",
-        "clients_id"
+        "users_id"
     )
 VALUES (
         1,
