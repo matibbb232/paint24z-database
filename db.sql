@@ -78,7 +78,7 @@ CREATE TABLE "order_details"(
 );
 
 CREATE TABLE "orders"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('orders_id_seq'),
   "amount" NUMERIC(10, 2) NOT NULL,
   "status" "order_status" NOT NULL,
   "order_date" date NOT NULL,
@@ -87,6 +87,14 @@ CREATE TABLE "orders"(
   "users_id" integer NOT NULL,
   CONSTRAINT "orders_pkey" PRIMARY KEY(id)
 );
+
+CREATE SEQUENCE orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 
 CREATE TABLE "products"(
   id integer NOT NULL,
@@ -214,6 +222,11 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
+ALTER TABLE "orders"
+    ALTER COLUMN id SET DEFAULT nextval('orders_id_seq');
+
+
+
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
@@ -276,38 +289,36 @@ VALUES
 
 
 
-INSERT INTO
-    "orders" (
-        id,
-        "amount",
-        "status",
-        "order_date",
-        "shipping_date",
-        "history",
-        "users_id"
-    )
-VALUES (
-        1,
-        2,
-        'pending',
-        '2025-01-01',
-        '2025-02-03',
-        'historia zamowienia',
-        1
-    ),
-    (
-        2,
-        2,
-        'pending',
-        '2025-01-01',
-        '2025-02-03',
-        'historia zamowienia',
-        1
-    );
+INSERT INTO "orders" (
+    "amount",
+    "status",
+    "order_date",
+    "shipping_date",
+    "history",
+    "users_id"
+) 
+VALUES 
+(
+    2,
+    'pending',
+    '2025-01-01',
+    '2025-02-03',
+    'historia zamowienia',
+    1
+),
+(
+    4,
+    'pending',
+    '2025-01-01',
+    '2025-02-03',
+    'historia zamowienia',
+    1
+);
+
+
 
 
 INSERT INTO "order_details" (id, "orders_id", "products_id", "quantity")
 VALUES
 (1, 1, 1, 10),
 (2, 1, 2, 5);
-
