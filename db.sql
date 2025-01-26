@@ -70,12 +70,19 @@ CREATE TABLE "operators"(
 );
 
 CREATE TABLE "order_details"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('orders_details_id_seq'),
   "orders_id" integer NOT NULL,
   "products_id" integer NOT NULL,
   "quantity" integer NOT NULL,
   CONSTRAINT "order_details_pkey" PRIMARY KEY(id)
 );
+
+CREATE SEQUENCE orders_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 0
+    NO MAXVALUE
+    CACHE 1;
 
 CREATE TABLE "orders"(
   id integer NOT NULL DEFAULT nextval('orders_id_seq'),
@@ -91,7 +98,7 @@ CREATE TABLE "orders"(
 CREATE SEQUENCE orders_id_seq
     START WITH 1
     INCREMENT BY 1
-    MINVALUE 1
+    MINVALUE 0
     NO MAXVALUE
     CACHE 1;
 
@@ -318,7 +325,7 @@ VALUES
 
 
 
-INSERT INTO "order_details" (id, "orders_id", "products_id", "quantity")
+INSERT INTO "order_details" ("orders_id", "products_id", "quantity")
 VALUES
-(1, 1, 1, 10),
-(2, 1, 2, 5);
+(1, 1, 10),
+(1, 2, 5);
