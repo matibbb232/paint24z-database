@@ -69,16 +69,30 @@ CREATE TABLE "operators"(
   CONSTRAINT "operators_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE orders_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "order_details"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('orders_details_id_seq'),
   "orders_id" integer NOT NULL,
   "products_id" integer NOT NULL,
   "quantity" integer NOT NULL,
   CONSTRAINT "order_details_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "orders"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('orders_id_seq'),
   "amount" NUMERIC(10, 2) NOT NULL,
   "status" "order_status" NOT NULL,
   "order_date" date NOT NULL,
@@ -87,6 +101,8 @@ CREATE TABLE "orders"(
   "users_id" integer NOT NULL,
   CONSTRAINT "orders_pkey" PRIMARY KEY(id)
 );
+
+
 
 CREATE TABLE "products"(
   id integer NOT NULL,
@@ -214,6 +230,8 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
+
+-- Adding data
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
@@ -263,21 +281,20 @@ VALUES
 
 INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id", "photo_id")
 VALUES
-(1, 'ADA4099-1HUJZ-RL7', 'Operational Amplifiers - Op Amps Precision, 10MHz, 7V/us OTT RRIO Amp', 27.99, 'Standard electronic components', 0.01, 12, 1, 1, 1, 1, 'lol'),
-(2, 'AD4080BBCZ', 'Analog to Digital Converters - ADC 20-Bit, 40 MSPS SAR ADC', 321.38, 'Advanced analog components', 0.02, 70, 1, 1, 2, 1, 'lol'),
-(3, 'ADXL382-1BCCZ-RL7', 'Accelerometers ADXL382 SPI', 110.51, 'Semiconductor components', 0.015, 23, 1, 1, 3, 1, 'lol'),
-(4, 'STM32F407VG Microcontroller', 'ARM Cortex-M4 32-bit Microcontroller with FPU, 1 MB Flash, 168 MHz', 60.50, 'Standard electronic components', 0.02, 99, 1, 1, 4, 1, 'lol'),
-(5, 'BC547 NPN Transistor', 'General-purpose NPN transistor for low-power amplification and switching', 1.20, 'Standard electronic components', 0.001, 200, 1, 1, 5, 1, 'lol'),
-(6, 'ESP32-WROOM-32 Wi-Fi Module', 'Low-power dual-core Wi-Fi and Bluetooth module with integrated antenna', 25.00, 'Standard electronic components', 0.005, 85, 1, 2, 6, 1, 'lol'),
-(7, 'LTC3643 Backup Power Controller', 'High-efficiency step-up DC/DC converter with integrated switches', 85.00, 'Standard electronic components', 0.01, 33, 1, 2, 7, 1, 'lol'),
-(8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 87, 1, 2, 8, 1, 'lol'),
-(9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 44, 1, 2, 9, 1, 'lol'),
-(10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 123, 1, 2, 10, 1, 'lol');
+(1, 'ADA4099-1HUJZ-RL7', 'Operational Amplifiers - Op Amps Precision, 10MHz, 7V/us OTT RRIO Amp', 27.99, 'Standard electronic components', 0.01, 12, 1, 1, 1, 1, 'ADA4099-1HUJZ-RL7'),
+(2, 'AD4080BBCZ', 'Analog to Digital Converters - ADC 20-Bit, 40 MSPS SAR ADC', 321.38, 'Advanced analog components', 0.02, 70, 1, 1, 2, 1, 'AD4080BBCZ'),
+(3, 'ADXL382-1BCCZ-RL7', 'Accelerometers ADXL382 SPI', 110.51, 'Semiconductor components', 0.015, 23, 1, 1, 3, 1, 'ADXL382-1BCCZ-RL7'),
+(4, 'STM32F407VG Microcontroller', 'ARM Cortex-M4 32-bit Microcontroller with FPU, 1 MB Flash, 168 MHz', 60.50, 'Standard electronic components', 0.02, 99, 1, 1, 4, 1, 'STM32F407VG Microcontroller'),
+(5, 'BC547 NPN Transistor', 'General-purpose NPN transistor for low-power amplification and switching', 1.20, 'Standard electronic components', 0.001, 200, 1, 1, 5, 1, 'BC547 NPN Transistor'),
+(6, 'ESP32-WROOM-32 Wi-Fi Module', 'Low-power dual-core Wi-Fi and Bluetooth module with integrated antenna', 25.00, 'Standard electronic components', 0.005, 85, 1, 2, 6, 1, 'ESP32-WROOM-32 Wi-Fi Module'),
+(7, 'LTC3643 Backup Power Controller', 'High-efficiency step-up DC/DC converter with integrated switches', 85.00, 'Standard electronic components', 0.01, 33, 1, 2, 7, 1, 'LTC3643 Backup Power Controller'),
+(8, 'LM7805 Voltage Regulator', '5V fixed output voltage regulator for linear power supplies', 3.50, 'Standard electronic components', 0.01, 87, 1, 2, 8, 1, 'LM7805 Voltage Regulator'),
+(9, 'OLED Display Module 128x64', '1.3-inch OLED display with SSD1306 controller, I2C interface', 50.00, 'Standard electronic components', 0.03, 44, 1, 2, 9, 1, 'OLED Display Module 128x64'),
+(10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 123, 1, 2, 10, 1, 'MPU6050 Motion Sensor');
 
 
 INSERT INTO
     "orders" (
-        id,
         "amount",
         "status",
         "order_date",
@@ -286,7 +303,6 @@ INSERT INTO
         "users_id"
     )
 VALUES (
-        1,
         2,
         'pending',
         '2025-01-01',
@@ -296,7 +312,6 @@ VALUES (
     ),
     (
         2,
-        2,
         'pending',
         '2025-01-01',
         '2025-02-03',
@@ -305,8 +320,8 @@ VALUES (
     );
 
 
-INSERT INTO "order_details" (id, "orders_id", "products_id", "quantity")
+INSERT INTO "order_details" ("orders_id", "products_id", "quantity")
 VALUES
-(1, 1, 1, 10),
-(2, 1, 2, 5);
+(1, 1, 10),
+(1, 2, 5);
 
