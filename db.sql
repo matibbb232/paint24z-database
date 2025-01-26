@@ -214,7 +214,7 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
-# Adding data:
+--  Adding data:
 
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
