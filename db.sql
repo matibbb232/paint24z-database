@@ -295,11 +295,21 @@ VALUES (
         '2025-02-03',
         'historia zamowienia',
         1
+    ),
+    (
+        2,
+        2,
+        'pending',
+        '2025-01-01',
+        '2025-02-03',
+        'historia zamowienia',
+        1
     );
 
 
 INSERT INTO "order_details" (id, "orders_id", "products_id", "quantity")
 VALUES
-(1, 1, 1, 10);
+(1, 1, 1, 10),
+(2, 1, 2, 5);
 
 
