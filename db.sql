@@ -255,8 +255,9 @@ VALUES
 INSERT INTO "users" (id, "username", "password", "creation_date", "employees_id", "clients_id", "last_login", "is_active", "is_superuser", "is_staff")
 VALUES
 (1, 'elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, 1, NULL, TRUE, TRUE, TRUE),
-(2, 'Aniapracownik', 'securePass456', '2025-01-15', 1, NULL, '2022-01-01 08:30:00', TRUE, FALSE, TRUE),
-(3, 'Szymonszef', 'admin789', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, TRUE);
+(2, 'Aniapracownik', 'pbkdf2_sha256$600000$octxI5J5hzQZt2qCu2W166$9fFfSA/c9LcvqXvE5q0ApKFOTyhyiYYxRhWZ925RbP8=', '2025-01-15', 1, NULL, '2022-01-01 08:30:00', TRUE, TRUE, FALSE),
+(3, 'Szymonszef', 'pbkdf2_sha256$600000$H0XvYr47jbf1Yos4eKw3cD$JS9Xb8Lz4C6kt3UXXhhUZwmADTL1bGiFLkjMb9cqUFE=', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, TRUE),
+(4, 'SzymonNIEszef', 'pbkdf2_sha256$600000$hkfuwSHz7HRK88mZCyrh2y$SLkA/5WOD55kpgNoltJb6N1aNOpe1nzZHbpDwwqciDg=', '2025-01-20', 2, NULL, '2020-01-01 10:30:00', TRUE, FALSE, FALSE);
 
 INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id")
 VALUES
