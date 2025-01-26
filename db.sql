@@ -31,8 +31,15 @@ CREATE TABLE "categories"(
   CONSTRAINT "categories_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE clients_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "clients"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('clients_id_seq'),
   "email_address" varchar(30) NOT NULL,
   "phone_number" varchar(15) NOT NULL,
   "name" varchar(30) NOT NULL,
@@ -43,8 +50,15 @@ CREATE TABLE "clients"(
   CONSTRAINT "clients_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE employees_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "employees"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('employees_id_seq'),
   "name" varchar(30) NOT NULL,
   "last_name" varchar(50) NOT NULL,
   "birth_date" date NOT NULL,
@@ -135,8 +149,15 @@ CREATE TABLE "store"(
   CONSTRAINT "store_pkey" PRIMARY KEY(id)
 );
 
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
 CREATE TABLE "users"(
-  id integer NOT NULL,
+  id integer NOT NULL DEFAULT nextval('users_id_seq'),
   "username" varchar(30) NOT NULL,
   "password" varchar(500) NOT NULL,
   "creation_date" date NOT NULL,
@@ -262,21 +283,21 @@ INSERT INTO "storage_spaces" (id, "warehouses_id")
 VALUES
 (1, 1);
 
-INSERT INTO "users" (id, "username", "password", "creation_date", "last_login", "is_active", "is_superuser", "is_staff")
+INSERT INTO "users" ("username", "password", "creation_date", "last_login", "is_active", "is_superuser", "is_staff")
 VALUES
-(1, 'elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, TRUE, TRUE, TRUE),
-(2, 'Aniapracownik', 'pbkdf2_sha256$600000$octxI5J5hzQZt2qCu2W166$9fFfSA/c9LcvqXvE5q0ApKFOTyhyiYYxRhWZ925RbP8=', '2025-01-15', '2022-01-01 08:30:00', TRUE, TRUE, FALSE),
-(3, 'Szymonszef', 'pbkdf2_sha256$600000$H0XvYr47jbf1Yos4eKw3cD$JS9Xb8Lz4C6kt3UXXhhUZwmADTL1bGiFLkjMb9cqUFE=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, TRUE),
-(4, 'SzymonNIEszef', 'pbkdf2_sha256$600000$hkfuwSHz7HRK88mZCyrh2y$SLkA/5WOD55kpgNoltJb6N1aNOpe1nzZHbpDwwqciDg=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, FALSE);
+('elektronicznypan', 'pbkdf2_sha256$600000$hXrlWCckSOY5Q0x8TEkyTr$TpdFQFmBLNpxYqePYYX/WnB/s3YYqYJIi+fLhoOYQZs=', '2025-01-01', NULL, TRUE, TRUE, TRUE),
+('Aniapracownik', 'pbkdf2_sha256$600000$octxI5J5hzQZt2qCu2W166$9fFfSA/c9LcvqXvE5q0ApKFOTyhyiYYxRhWZ925RbP8=', '2025-01-15', '2022-01-01 08:30:00', TRUE, TRUE, FALSE),
+('Szymonszef', 'pbkdf2_sha256$600000$H0XvYr47jbf1Yos4eKw3cD$JS9Xb8Lz4C6kt3UXXhhUZwmADTL1bGiFLkjMb9cqUFE=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, TRUE),
+('SzymonNIEszef', 'pbkdf2_sha256$600000$hkfuwSHz7HRK88mZCyrh2y$SLkA/5WOD55kpgNoltJb6N1aNOpe1nzZHbpDwwqciDg=', '2025-01-20', '2020-01-01 10:30:00', TRUE, FALSE, FALSE);
 
-INSERT INTO "clients" (id, "email_address", "phone_number", "name", "last_name", "gender", "store_id", "users_id")
+INSERT INTO "clients" ("email_address", "phone_number", "name", "last_name", "gender", "store_id", "users_id")
 VALUES
-(1, 'elektronicznypan@gmail.com', '123456789', 'Paweł', 'Pawłowski', 'M', 1, 1);
+('elektronicznypan@gmail.com', '123456789', 'Paweł', 'Pawłowski', 'M', 1, 1);
 
-INSERT INTO "employees" (id, "name", "last_name", "birth_date", "pesel", "hire_date", "email_address", "phone_number", "bank_account_number", "store_id", "users_id")
+INSERT INTO "employees" ("name", "last_name", "birth_date", "pesel", "hire_date", "email_address", "phone_number", "bank_account_number", "store_id", "users_id")
 VALUES
-(1, 'Anna', 'Kowalska', '1979-06-06', '79839125736', '1999-06-06', 'anialol@gmail.com', '776541099', '102028922276300500000000', 1, 2),
-(2, 'Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1, 3);
+('Anna', 'Kowalska', '1979-06-06', '79839125736', '1999-06-06', 'anialol@gmail.com', '776541099', '102028922276300500000000', 1, 2),
+('Szymon', 'Szefowski', '1959-05-22', '59096145921', '1980-06-06', 'szymex@gmail.com', '887654321', '102028922276300500000000', 1, 3);
 
 
 INSERT INTO "products" (id, "name", "description", "price", "composition", "weight", "instock", "store_id", "manufacturers_id", "categories_id", "storage_spaces_id", "photo_id")
