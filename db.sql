@@ -102,7 +102,6 @@ CREATE SEQUENCE orders_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
 CREATE TABLE "products"(
   id integer NOT NULL,
   "name" varchar(100) NOT NULL,
@@ -229,11 +228,6 @@ ALTER TABLE "products"
   ADD CONSTRAINT "products_storage_spaces_id_fkey"
     FOREIGN KEY ("storage_spaces_id") REFERENCES "storage_spaces" (id);
 
-ALTER TABLE "orders"
-    ALTER COLUMN id SET DEFAULT nextval('orders_id_seq');
-
-
-
 INSERT INTO "store" (id, "name", "email_address", "phone_number", "tax_id")
 VALUES
 (1, 'TechStore', 'info@techstore.com', '123-456-789', '1234567890');
@@ -295,37 +289,35 @@ VALUES
 (10, 'MPU6050 Motion Sensor', '6-axis gyroscope and accelerometer module for motion tracking applications', 30.00, 'Standard electronic components', 0.0015, 123, 1, 2, 10, 1, 'MPU6050 Motion Sensor');
 
 
-
-INSERT INTO "orders" (
-    "amount",
-    "status",
-    "order_date",
-    "shipping_date",
-    "history",
-    "users_id"
-) 
-VALUES 
-(
-    2,
-    'pending',
-    '2025-01-01',
-    '2025-02-03',
-    'historia zamowienia',
-    1
-),
-(
-    4,
-    'pending',
-    '2025-01-01',
-    '2025-02-03',
-    'historia zamowienia',
-    1
-);
-
-
+INSERT INTO
+    "orders" (
+        "amount",
+        "status",
+        "order_date",
+        "shipping_date",
+        "history",
+        "users_id"
+    )
+VALUES (
+        2,
+        'pending',
+        '2025-01-01',
+        '2025-02-03',
+        'historia zamowienia',
+        1
+    ),
+    (
+        2,
+        'pending',
+        '2025-01-01',
+        '2025-02-03',
+        'historia zamowienia',
+        1
+    );
 
 
 INSERT INTO "order_details" ("orders_id", "products_id", "quantity")
 VALUES
 (1, 1, 10),
 (1, 2, 5);
+
